@@ -22,6 +22,8 @@ BuildRequires:  zip
 Group:          Development/Java
 BuildArch:      noarch
 
+Provides: xml-commons-resolver12 = %version-%release
+
 %description
 Resolver subproject of xml-commons.
 
