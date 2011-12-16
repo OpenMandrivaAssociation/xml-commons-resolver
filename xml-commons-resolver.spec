@@ -1,6 +1,6 @@
 Name:           xml-commons-resolver
 Version:        1.2
-Release:        9
+Release:        10
 Summary:        Resolver subproject of xml-commons
 License:        ASL 2.0
 URL:            http://xml.apache.org/commons/
