@@ -102,3 +102,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_javadocdir}/%{name}
 %doc LICENSE.resolver.txt
 
+
+
+%changelog
+* Fri Dec 16 2011 Guilherme Moro <guilherme@mandriva.com> 1.2-10
++ Revision: 742586
+- fix to provides xml-commons-resolver12
+
+* Sun Nov 27 2011 Guilherme Moro <guilherme@mandriva.com> 1.2-9
++ Revision: 734304
+- rebuild
+- imported package xml-commons-resolver
+

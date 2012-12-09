@@ -1,7 +1,2 @@
 sources:
-  "xml-commons-resolver-1.2.tar.gz:"	21f0808fd19671a38dc568df8fa27738fa2ebb46
-  "xml-commons-resolver-MANIFEST.MF:"	3967b687d9b42991685d088dc17f113ccae3f207
-  "xml-commons-resolver-pom.xml:"	f18c0830ec69bbd60e39f6c22492e7fd86489f2e
-  "xml-commons-resolver-resolver.sh:"	eee2738f23f780a0da441aec9a946e0699cc2232
-  "xml-commons-resolver-xparse.sh:"	2581a9e366a5056daf4a46c5a323fe90be6e8488
-  "xml-commons-resolver-xread.sh:"	5a582c62cfd25304b6b2dc3dce69f406878185ab
+  "xml-commons-resolver-1.2.tar.gz": 21f0808fd19671a38dc568df8fa27738fa2ebb46
