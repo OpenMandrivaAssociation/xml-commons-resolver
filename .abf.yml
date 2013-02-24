@@ -1,2 +1,5 @@
+removed_sources:
+  xml-commons-resolver-1.2.tar.gz: 21f0808fd19671a38dc568df8fa27738fa2ebb46
 sources:
-  "xml-commons-resolver-1.2.tar.gz": 21f0808fd19671a38dc568df8fa27738fa2ebb46
+  xml-commons-resolver-1.2.tar.xz: 0a40fb3c308e592050d1ae949454d0577def8d9d
+  xml-commons-resolver-pom.xml: f18c0830ec69bbd60e39f6c22492e7fd86489f2e
