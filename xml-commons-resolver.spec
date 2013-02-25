@@ -2,7 +2,7 @@ Summary:	Resolver subproject of xml-commons
 Name:		xml-commons-resolver
 Epoch:		1
 Version:	1.2
-Release:	11
+Release:	12
 License:	ASL 2.0
 Group:		Development/Java
 Url:		http://xerces.apache.org/xml-commons/
@@ -19,7 +19,7 @@ Source5:	%{name}-MANIFEST.MF
 Source6:	%{name}-pom.xml
 BuildArch:	noarch
 
-BuildRequires:	java-devel >= 0:1.6.0
+BuildRequires:	java-1.6.0-openjdk-devel
 BuildRequires:	ant
 BuildRequires:	jpackage-utils
 BuildRequires:	zip
@@ -86,6 +86,7 @@ sed -i -e 's|call Resolver|call resolver|g' java/resolver.xml
 sed -i -e 's|classname="org.apache.xml.resolver.Catalog"|fork="yes" classname="org.apache.xml.resolver.apps.resolver"|g' java/resolver.xml
 sed -i -e 's|org.apache.xml.resolver.Catalog|org.apache.xml.resolver.apps.resolver|g' java/src/manifest.resolver
 
+export JAVA_HOME=%_prefix/lib/jvm/java-1.6.0
 ant jars javadocs
 
 %install
