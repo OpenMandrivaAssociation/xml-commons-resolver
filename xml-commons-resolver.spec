@@ -2,7 +2,7 @@ Summary:	Resolver subproject of xml-commons
 Name:		xml-commons-resolver
 Epoch:		1
 Version:	1.2
-Release:	10
+Release:	11
 License:	ASL 2.0
 Group:		Development/Java
 Url:		http://xerces.apache.org/xml-commons/
@@ -93,10 +93,10 @@ ant jars javadocs
 mkdir -p META-INF
 cp -p %{SOURCE5} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u build/resolver.jar META-INF/MANIFEST.MF
+zip -u java/build/resolver.jar META-INF/MANIFEST.MF
 
 # Jars
-install -pD -T build/resolver.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
+install -pD -T java/build/resolver.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/xml-resolver-%{version}.jar
 
 # Jar versioning
