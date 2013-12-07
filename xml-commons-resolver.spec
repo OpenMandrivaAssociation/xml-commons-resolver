@@ -2,7 +2,7 @@ Summary:	Resolver subproject of xml-commons
 Name:		xml-commons-resolver
 Epoch:		1
 Version:	1.2
-Release:	14
+Release:	15
 License:	ASL 2.0
 Group:		Development/Java
 Url:		http://xerces.apache.org/xml-commons/
