@@ -1,33 +1,27 @@
 %{?_javapackages_macros:%_javapackages_macros}
+%global headless -headless
+
 Name:           xml-commons-resolver
 Version:        1.2
-Release:        14.1%{?dist}
-%if 0%{?fedora}
-Epoch:          0
-%else
-# FIXME epoch in mandriva...
+Release:        17.1
 Epoch:          1
-%endif
 Summary:        Resolver subproject of xml-commons
+Group:		Development/Java
 License:        ASL 2.0
-URL:            http://xml.apache.org/commons/
-Source0:        http://www.apache.org/dist/xml/commons/xml-commons-resolver-%{version}.tar.gz
-Source1:        xml-commons-resolver-resolver.sh
-Source2:        xml-commons-resolver-xread.sh
-Source3:        xml-commons-resolver-xparse.sh
-Source4:        %{name}-MANIFEST.MF
+URL:            http://xerces.apache.org/xml-commons/components/resolver/
+Source0:        http://www.apache.org/dist/xerces/xml-commons/%{name}-%{version}.tar.gz
 Source5:        %{name}-pom.xml
 Source6:        %{name}-resolver.1
 Source7:        %{name}-xparse.1
 Source8:        %{name}-xread.1
+Patch0:         %{name}-1.2-crosslink.patch
+Patch1:         %{name}-1.2-osgi.patch
 
-Requires:       xml-commons-apis
+Requires:       java%{?headless} >= 1:1.6.0
 Requires:       jpackage-utils
 BuildRequires:  java-devel >= 1:1.6.0
 BuildRequires:  ant
 BuildRequires:  jpackage-utils
-BuildRequires:  zip
-
 BuildArch:      noarch
 
 %description
@@ -35,34 +29,27 @@ Resolver subproject of xml-commons.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-
-Requires:       jpackage-utils
+Group:          Documentation
+BuildRequires:  java-javadoc
+Requires:       java-javadoc
 
 %description javadoc
 Javadoc for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 # remove all binary libs and prebuilt javadocs
 find . -name "*.jar" -exec rm -f {} \;
 rm -rf docs
-sed -i 's/\r//' KEYS LICENSE.resolver.txt
+sed -i 's/\r//' KEYS LICENSE.resolver.txt NOTICE-resolver.txt
 
 %build
-sed -i -e 's|call Resolver|call resolver|g' resolver.xml
-sed -i -e 's|classname="org.apache.xml.resolver.Catalog"|fork="yes" classname="org.apache.xml.resolver.apps.resolver"|g' resolver.xml
-sed -i -e 's|org.apache.xml.resolver.Catalog|org.apache.xml.resolver.apps.resolver|g' src/manifest.resolver
-
-ant -f resolver.xml jar javadocs
+%ant -f resolver.xml jar javadocs
 
 %install
-# inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE4} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/resolver.jar META-INF/MANIFEST.MF
-
 # Jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -p -m 644 build/resolver.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
@@ -74,9 +61,9 @@ cp -pr build/apidocs/resolver/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # Scripts
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-cp %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/xml-resolver
-cp %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/xml-xread
-cp %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/xml-xparse
+%jpackage_script org.apache.xml.resolver.apps.resolver "" "" %{name} xml-resolver true
+%jpackage_script org.apache.xml.resolver.apps.xread "" "" %{name} xml-xread true
+%jpackage_script org.apache.xml.resolver.apps.xparse "" "" %{name} xml-xparse true
 
 # Man pages
 install -d -m 755 ${RPM_BUILD_ROOT}%{_mandir}/man1
@@ -89,19 +76,32 @@ install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -p -m 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
-%doc KEYS LICENSE.resolver.txt
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%doc KEYS LICENSE.resolver.txt NOTICE-resolver.txt
 %{_mandir}/man1/*
-%attr(0755,root,root) %{_bindir}/*
+%{_bindir}/xml-*
+%{_javadir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE.resolver.txt
+%doc LICENSE.resolver.txt NOTICE-resolver.txt
 
 %changelog
+* Fri Jun 13 2014 Alexander Kurtakov <akurtako@redhat.com> 0:1.2-17
+- Fix FTBFS.
+
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0:1.2-16
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Mon Dec 23 2013 Ville Skyttä <ville.skytta@iki.fi> - 0:1.2-15
+- Use %%jpackage_script to generate scripts.
+- Add OSGi metadata to manifest instead of discarding everything else in it.
+- Drop dependency on xml-commons-api, add one on java(-headless).
+- Crosslink javadocs with Java's.
+- Include NOTICE* in docs.
+- Update URLs.
+- Specfile cleanups.
+
 * Thu Aug 15 2013 Mat Booth <fedora@matbooth.co.uk> - 0:1.2-14
 - Fix FTBFS rhbz #993143
 
@@ -153,7 +153,7 @@ install -p -m 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 - Add dos2unix BR and fix line endings
 - Use upstream tarball
 
-* Sat Aug  8 2009 Ville Skyttä <ville.skytta at iki.fi> - 0:1.1-4.16
+* Sat Aug  8 2009 Ville Skyttä <ville.skytta@iki.fi> - 0:1.1-4.16
 - Fix specfile UTF-8 encoding.
 
 * Mon Jul 27 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0:1.1-4.15
@@ -219,5 +219,6 @@ install -p -m 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 * Tue May 06 2003 David Walluck <david@anti-microsoft.org> 0:1.0-2jpp
 - update for JPackage 1.5
 
-* Wed Nov 13 2002 Ville Skyttä <ville.skytta at iki.fi> - 1.0-1jpp
+* Wed Nov 13 2002 Ville Skyttä <ville.skytta@iki.fi> - 1.0-1jpp
 - Follow upstream changes, split out of xml-commons.
+
