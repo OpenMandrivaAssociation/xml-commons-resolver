@@ -3,7 +3,7 @@
 
 Name:           xml-commons-resolver
 Version:        1.2
-Release:        17.1
+Release:        17.2
 Epoch:          1
 Summary:        Resolver subproject of xml-commons
 Group:		Development/Java
