@@ -14,7 +14,7 @@ Source8:        %{name}-xread.1
 Patch0:         %{name}-1.2-crosslink.patch
 Patch1:         %{name}-1.2-osgi.patch
 
-BuildRequires:  java-devel >= 1:1.6.0
+BuildRequires:  java-11-openjdk
 BuildRequires:  ant
 BuildArch:      noarch
 
