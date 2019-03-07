@@ -1,7 +1,6 @@
 Name:           xml-commons-resolver
 Version:        1.2
-Release:        18
-Epoch:          1
+Release:        19
 Summary:        Resolver subproject of xml-commons
 Group:		Development/Java
 License:        ASL 2.0
@@ -15,6 +14,7 @@ Patch0:         %{name}-1.2-crosslink.patch
 Patch1:         %{name}-1.2-osgi.patch
 
 BuildRequires:  java-11-openjdk
+BuildRequires:	javapackages-local
 BuildRequires:  ant
 BuildArch:      noarch
 
@@ -66,8 +66,9 @@ install -p -m 644 %{SOURCE8} ${RPM_BUILD_ROOT}%{_mandir}/man1/xml-xread.1
 # Pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -p -m 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
+%files -f .mfiles
 %doc KEYS LICENSE.resolver.txt NOTICE-resolver.txt
 %{_mandir}/man1/*
 %{_bindir}/xml-*
