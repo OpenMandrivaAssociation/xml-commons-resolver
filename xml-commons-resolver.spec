@@ -1,6 +1,6 @@
 Name:           xml-commons-resolver
 Version:        1.2
-Release:        19
+Release:        20
 Summary:        Resolver subproject of xml-commons
 Group:		Development/Java
 License:        ASL 2.0
