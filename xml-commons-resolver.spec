@@ -4,7 +4,7 @@ Release:        20
 Summary:        Resolver subproject of xml-commons
 Group:		Development/Java
 License:        ASL 2.0
-URL:            http://xerces.apache.org/xml-commons/components/resolver/
+URL:            https://xerces.apache.org/xml-commons/components/resolver/
 Source0:        http://www.apache.org/dist/xerces/xml-commons/%{name}-%{version}.tar.gz
 Source5:        %{name}-pom.xml
 Source6:        %{name}-resolver.1
